@@ -250,8 +250,15 @@ BarWidget {
       // Hyprland raises this when a window on the workspace asks for
       // attention. The built-in widget ignores it, so an app calling you back
       // from another workspace leaves no trace on the bar at all.
+      //
+      // `occupied` is not redundant. Quickshell keeps handing back a workspace
+      // object after Hyprland has destroyed the workspace, and a stale one can
+      // still read urgent: switching away from an empty workspace that had
+      // been flagged left it blinking forever on a workspace that no longer
+      // exists. Urgency means a window is asking for you, so requiring a
+      // window is both the fix and the honest condition.
       readonly property bool urgent: root.urgentMode !== "none"
-        && workspace !== null && workspace.urgent && !focused
+        && workspace !== null && workspace.urgent && occupied && !focused
       property bool blinkOn: true
       // Under Pac-Man right now.
       readonly property bool covered: root.style === "pacman"
