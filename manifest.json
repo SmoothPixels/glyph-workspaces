@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "id": "io.github.smoothpixels.glyph-workspaces",
+  "name": "Glyph Workspaces",
+  "version": "1.0.0",
+  "author": "Jean Alvarado",
+  "license": "MIT",
+  "description": "Workspace indicators with a Pac-Man that travels to the focused workspace eating the pellets on the way, plus dots, numbers, and custom glyph styles.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Glyph Workspaces",
+    "description": "A drop-in replacement for the built-in workspace indicators, with a Pac-Man that walks between workspaces.",
+    "category": "Compositor",
+    "allowMultiple": false,
+    "defaultSection": "left",
+    "defaults": {
+      "style": "pacman",
+      "count": 5,
+      "activeGlyph": "●",
+      "inactiveGlyph": "○",
+      "focusedGlyph": "",
+      "color": "",
+      "activeColor": "",
+      "indicator": "auto",
+      "dim": 50,
+      "fontSize": 0,
+      "slotWidth": 0,
+      "chomp": "travel",
+      "speed": 100,
+      "eat": true,
+      "ghost": false,
+      "scroll": false
+    },
+    "schema": [
+      {
+        "key": "style",
+        "type": "enum",
+        "label": "Style",
+        "description": "How each workspace is drawn.",
+        "defaultValue": "pacman",
+        "options": [
+          {
+            "value": "pacman",
+            "label": "󰮯  Pac-Man",
+            "description": "Pac-Man travels to the focused workspace, eating the pellets on the way"
+          },
+          {
+            "value": "dots",
+            "label": "󰝥  Dots",
+            "description": "A filled dot per occupied workspace, a small one per empty workspace"
+          },
+          {
+            "value": "numbers",
+            "label": "  Numbers",
+            "description": "Workspace numbers, like the built-in widget"
+          },
+          {
+            "value": "glyph",
+            "label": "  Custom glyphs",
+            "description": "Your own two characters, one for occupied workspaces and one for empty"
+          }
+        ]
+      },
+      {
+        "key": "count",
+        "type": "integer",
+        "label": "Workspaces",
+        "description": "How many workspaces to always show. Live workspaces above this still appear, up to 10.",
+        "defaultValue": 5,
+        "min": 1,
+        "max": 10,
+        "step": 1
+      },
+      {
+        "key": "activeGlyph",
+        "type": "string",
+        "label": "Occupied glyph",
+        "description": "Used when Style is Custom glyphs. Any character: a pasted Nerd Font glyph or an emoji.",
+        "defaultValue": "●"
+      },
+      {
+        "key": "inactiveGlyph",
+        "type": "string",
+        "label": "Empty glyph",
+        "description": "Used when Style is Custom glyphs, for workspaces with no windows.",
+        "defaultValue": "○"
+      },
+      {
+        "key": "focusedGlyph",
+        "type": "string",
+        "label": "Focused glyph",
+        "description": "Used when Style is Custom glyphs, for the workspace you are on. Empty reuses the occupied glyph.",
+        "defaultValue": ""
+      },
+      {
+        "key": "color",
+        "type": "string",
+        "label": "Color",
+        "description": "Empty follows the active theme. Use \"accent\", \"urgent\", \"muted\", or a #rrggbb hex value.",
+        "defaultValue": ""
+      },
+      {
+        "key": "activeColor",
+        "type": "string",
+        "label": "Active color",
+        "description": "Colour of Pac-Man and of the focused marker. Empty matches Color above.",
+        "defaultValue": ""
+      },
+      {
+        "key": "indicator",
+        "type": "enum",
+        "label": "Focus indicator",
+        "description": "A mark on the focused slot, so focus survives a theme whose accent matches its foreground. Auto draws an underline for every style except Pac-Man, who marks it himself.",
+        "defaultValue": "auto",
+        "options": [
+          {
+            "value": "auto",
+            "label": "Auto"
+          },
+          {
+            "value": "underline",
+            "label": "Underline"
+          },
+          {
+            "value": "pill",
+            "label": "Pill"
+          },
+          {
+            "value": "none",
+            "label": "None"
+          }
+        ]
+      },
+      {
+        "key": "dim",
+        "type": "integer",
+        "label": "Empty opacity",
+        "description": "Opacity of workspaces with no windows, as a percentage.",
+        "defaultValue": 50,
+        "min": 0,
+        "max": 100,
+        "step": 5
+      },
+      {
+        "key": "fontSize",
+        "type": "integer",
+        "label": "Marker size",
+        "description": "Pixel size of the markers. Pac-Man scales with it. 0 follows the bar.",
+        "defaultValue": 0,
+        "min": 0,
+        "max": 48,
+        "step": 1
+      },
+      {
+        "key": "slotWidth",
+        "type": "integer",
+        "label": "Slot width",
+        "description": "Width of one workspace slot, which sets how far apart the markers sit. 0 picks a spacing that suits the style.",
+        "defaultValue": 0,
+        "min": 0,
+        "max": 40,
+        "step": 1
+      },
+      {
+        "key": "chomp",
+        "type": "enum",
+        "label": "Chomp",
+        "description": "When Pac-Man's mouth animates.",
+        "defaultValue": "travel",
+        "options": [
+          {
+            "value": "travel",
+            "label": "While travelling"
+          },
+          {
+            "value": "always",
+            "label": "Always"
+          },
+          {
+            "value": "never",
+            "label": "Never"
+          }
+        ]
+      },
+      {
+        "key": "speed",
+        "type": "integer",
+        "label": "Speed",
+        "description": "Travel and chomp speed, as a percentage. Higher is faster.",
+        "defaultValue": 100,
+        "min": 25,
+        "max": 400,
+        "step": 25
+      },
+      {
+        "key": "eat",
+        "type": "boolean",
+        "label": "Eat pellets",
+        "description": "Pellets vanish as Pac-Man passes them, and come back a moment after he arrives.",
+        "defaultValue": true
+      },
+      {
+        "key": "ghost",
+        "type": "boolean",
+        "label": "Ghost",
+        "description": "A ghost trails behind Pac-Man.",
+        "defaultValue": false
+      },
+      {
+        "key": "scroll",
+        "type": "boolean",
+        "label": "Scroll to switch",
+        "description": "Scrolling over the widget moves to the previous or next workspace.",
+        "defaultValue": false
+      }
+    ]
+  }
+}
