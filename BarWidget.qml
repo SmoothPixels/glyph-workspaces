@@ -34,6 +34,7 @@ BarWidget {
   readonly property string inactiveGlyph: setting("inactiveGlyph", Styles.MARKERS.ring)
   readonly property string focusedGlyph: setting("focusedGlyph", "")
   readonly property string indicator: setting("indicator", "auto")
+  readonly property string urgentMode: setting("urgent", "flash")
   readonly property real dim: Math.max(0, Math.min(100, numberSetting("dim", 50))) / 100
   readonly property real fontSizeSetting: numberSetting("fontSize", 0)
   readonly property real slotWidthSetting: numberSetting("slotWidth", 0)
@@ -246,6 +247,12 @@ BarWidget {
       readonly property var workspace: root.workspaceById(modelData)
       readonly property bool occupied: workspace !== null && workspace.toplevels.values.length > 0
       readonly property bool focused: modelData === root.focusedId
+      // Hyprland raises this when a window on the workspace asks for
+      // attention. The built-in widget ignores it, so an app calling you back
+      // from another workspace leaves no trace on the bar at all.
+      readonly property bool urgent: root.urgentMode !== "none"
+        && workspace !== null && workspace.urgent && !focused
+      property bool blinkOn: true
       // Under Pac-Man right now.
       readonly property bool covered: root.style === "pacman"
         && root.focusedIndex >= 0
@@ -270,11 +277,22 @@ BarWidget {
       })
       fontSize: root.markerFontSize
       foreground: focused && root.style !== "pacman" ? root.activeColor : root.baseColor
-      opacity: covered || eaten ? 0 : (occupied || focused ? 1 : root.dim)
+      // WidgetButton paints `activeColor`, the bar's own urgent colour, while
+      // this is true, and cross-fades back when it goes false.
+      active: urgent && (root.urgentMode === "color" || blinkOn)
+      opacity: covered || eaten ? 0 : (occupied || focused || urgent ? 1 : root.dim)
       horizontalMargin: 0
       verticalPadding: 6
       // Numbers say which workspace they are; pellets do not.
       tooltipText: root.style === "numbers" ? "" : "Workspace " + modelData
+      Timer {
+        running: slot.urgent && root.urgentMode === "flash"
+        interval: 520
+        repeat: true
+        onTriggered: slot.blinkOn = !slot.blinkOn
+        onRunningChanged: if (!running) slot.blinkOn = true
+      }
+
       onPressed: function(button) { root.focusWorkspace(modelData) }
       onWheelMoved: function(delta) { if (root.scrollToSwitch) root.step(delta > 0 ? -1 : 1) }
     }

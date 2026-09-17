@@ -27,6 +27,7 @@
       "color": "",
       "activeColor": "",
       "indicator": "auto",
+      "urgent": "flash",
       "dim": 50,
       "fontSize": 0,
       "slotWidth": 0,
@@ -133,6 +134,27 @@
           {
             "value": "none",
             "label": "None"
+          }
+        ]
+      },
+      {
+        "key": "urgent",
+        "type": "enum",
+        "label": "Urgent workspaces",
+        "description": "What a workspace does when a window on it asks for attention.",
+        "defaultValue": "flash",
+        "options": [
+          {
+            "value": "flash",
+            "label": "Flash"
+          },
+          {
+            "value": "color",
+            "label": "Urgent colour"
+          },
+          {
+            "value": "none",
+            "label": "Ignore"
           }
         ]
       },

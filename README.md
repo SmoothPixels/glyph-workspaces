@@ -52,6 +52,7 @@ and you never need `--json`.
 | `style` | `pacman`, `dots`, `numbers`, or `glyph`. |
 | `count` | How many workspaces to always show. Live ones above this still appear, up to 10. Default `5`. |
 | `indicator` | Mark on the focused slot: `auto`, `underline`, `pill`, `none`. `auto` underlines every style except Pac-Man, who marks it himself. |
+| `urgent` | What a workspace does when a window on it asks for attention: `flash`, `color`, `none`. See the note below. |
 | `color` | Empty follows the active theme. `accent`, `urgent`, `muted`, or a `#rrggbb` hex value. |
 | `activeColor` | Colour of Pac-Man and of the focused marker. Empty matches `color`. |
 | `dim` | Opacity of workspaces with no windows, as a percentage. Default `50`. |
@@ -127,6 +128,14 @@ omarchy plugin enable omarchy.workspaces
 
 ## Notes
 
+- **Urgent workspaces are rarer than you'd expect on Omarchy.** Omarchy sets
+  `misc:focus_on_activate = true`, so a window asking for attention normally
+  just pulls you straight to it and the workspace is never left marked urgent.
+  Where this does show up is apps configured the other way — Omarchy ships
+  `focus_on_activate = false` for Telegram, and you can do the same for any app
+  in `~/.config/hypr/apps/`. So the setting is worth having, but on a stock
+  install it will sit quiet most of the time. It only paints a marker; it does
+  not change focus behaviour or touch your Hyprland config.
 - **Multiple monitors.** Hyprland has one focused workspace at a time across
   all of them, so Pac-Man appears on the bar of whichever monitor you're on and
   the other bars show their workspaces unfocused. The built-in widget behaves
