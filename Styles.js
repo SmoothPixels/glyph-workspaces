@@ -55,7 +55,11 @@ var MARKERS = {
   powerPellet: "●", // BLACK CIRCLE, an occupied workspace
   pellet: "•",      // BULLET, an empty workspace
   ring: "○",        // WHITE CIRCLE, the default custom-glyph "empty"
-  focus: "◉"        // FISHEYE, the focused workspace
+  focus: "◉",       // FISHEYE, the focused workspace
+  // U+F14FB, what omarchy.workspaces puts on the focused slot in place of its
+  // number. Written as the surrogate pair the built-in widget uses. Set it as
+  // `focusedGlyph` to reproduce the stock look exactly; see the README.
+  omarchyFocus: "󱓻"
 }
 
 function findStyle(id) {
@@ -86,9 +90,15 @@ function glyphChar(code) {
 // the widget; the slots underneath stay ordinary pellets so they keep their
 // click target and their occupied/empty meaning, and so they can be eaten.
 function markerFor(style, state) {
+  // A focused glyph, once set, replaces the focused marker in every text
+  // style, not just the custom one: that is what lets `numbers` reproduce the
+  // built-in widget, which swaps its focused number for a glyph. Not in
+  // `pacman`, where the focused slot is a pellet he is standing on.
+  if (style !== "pacman" && state.focused && state.focusedGlyph !== "") return state.focusedGlyph
+
   if (style === "numbers") return state.id === 10 ? "0" : String(state.id)
   if (style === "glyph") {
-    if (state.focused) return state.focusedGlyph !== "" ? state.focusedGlyph : state.activeGlyph
+    if (state.focused) return state.activeGlyph
     return state.occupied ? state.activeGlyph : state.inactiveGlyph
   }
   if (style === "pacman") return state.occupied ? MARKERS.powerPellet : MARKERS.pellet

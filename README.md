@@ -59,13 +59,14 @@ and you never need `--json`.
 | `fontSize` | Pixel size of the markers. Pac-Man scales with it. `0` follows the bar. |
 | `slotWidth` | Width of one slot, so how far apart the markers sit. `0` picks a spacing that suits the style. |
 
+| `focusedGlyph` | Replaces the marker on the workspace you're on, in every style except Pac-Man. Empty leaves each style's own. |
+
 Custom glyph style only:
 
 | Key | Effect |
 | --- | --- |
 | `activeGlyph` | Marker for a workspace with windows. Default `●`. |
 | `inactiveGlyph` | Marker for an empty workspace. Default `○`. |
-| `focusedGlyph` | Marker for the workspace you're on. Empty reuses `activeGlyph`. |
 
 Pac-Man style only:
 
@@ -92,6 +93,25 @@ Focus is marked by shape as well as colour, because a theme is free to set the
 bar's accent to the same value as its foreground and several do. That's what
 the focus indicator and the distinct focused marker are for; set
 `indicator none` if you'd rather not have it.
+
+### Matching the built-in widget exactly
+
+The `numbers` style is the built-in widget in every respect but one. Omarchy
+replaces the focused workspace's number with a glyph, so on workspace 1 it
+reads `󱓻 2 3 4 5` and you can no longer see which number you're on.
+This keeps the number and underlines it instead, which survives a theme whose
+accent matches its foreground.
+
+If you'd rather have the stock look, it's two settings:
+
+```sh
+omarchy bar set io.github.smoothpixels.glyph-workspaces style numbers
+omarchy bar set io.github.smoothpixels.glyph-workspaces focusedGlyph 󱓻
+omarchy bar set io.github.smoothpixels.glyph-workspaces indicator none
+```
+
+`focusedGlyph` works in the `dots` style too, and is ignored by `pacman`,
+where the focused slot is a pellet he's standing on.
 
 ### Optional: a real menu picker
 

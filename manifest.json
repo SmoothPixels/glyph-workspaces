@@ -95,7 +95,7 @@
         "key": "focusedGlyph",
         "type": "string",
         "label": "Focused glyph",
-        "description": "Used when Style is Custom glyphs, for the workspace you are on. Empty reuses the occupied glyph.",
+        "description": "Replaces the marker on the workspace you're on, in every style except Pac-Man. Empty leaves each style's own focused marker. Set it to 󱓻 to match the built-in widget.",
         "defaultValue": ""
       },
       {
