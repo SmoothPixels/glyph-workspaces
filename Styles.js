@@ -54,8 +54,8 @@ function styles() {
       slot: 14
     },
     {
-      id: "numbers",
-      label: "Numbers",
+      id: "omarchy",
+      label: "Omarchy",
       description: "Workspace numbers, like the built-in widget",
       icon: "f292",
       slot: 20
@@ -121,19 +121,19 @@ function glyphChar(code) {
 // Focus is marked by shape, not only by colour: a theme is free to set the
 // bar's accent to the same value as its foreground, and several do, so a
 // colour-only focus cue can vanish entirely. The indicator the widget draws
-// underneath is the other half of that, and works for `numbers` too.
+// underneath is the other half of that, and works for `omarchy` too.
 //
 // `pacman` returns pellets here as well. Pac-Man himself is drawn on top by
 // the widget; the slots underneath stay ordinary pellets so they keep their
 // click target and their occupied/empty meaning, and so they can be eaten.
 function markerFor(style, state) {
   // A focused glyph, once set, replaces the focused marker in every text
-  // style, not just the custom one: that is what lets `numbers` reproduce the
+  // style, not just the custom one: that is what lets `omarchy` reproduce the
   // built-in widget, which swaps its focused number for a glyph. Not in
   // `pacman`, where the focused slot is a pellet he is standing on.
   if (style !== "pacman" && state.focused && state.focusedGlyph !== "") return state.focusedGlyph
 
-  if (style === "numbers") return state.id === 10 ? "0" : String(state.id)
+  if (style === "omarchy") return state.id === 10 ? "0" : String(state.id)
   if (style === "glyph") {
     if (state.focused) return state.activeGlyph
     return state.occupied ? state.activeGlyph : state.inactiveGlyph

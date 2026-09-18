@@ -175,9 +175,9 @@ BarWidget {
   // More windows, bigger marker. The widget already reads the toplevel count
   // to decide occupied, so this is free information rather than new chrome -
   // and under Pac-Man it lands exactly on the metaphor: a busier workspace is
-  // a fatter pellet. Numbers are left alone; scaled digits just look broken.
+  // a fatter pellet. Omarchy's numbers are left alone; scaled digits just look broken.
   function markerScale(windows, occupied) {
-    if (!root.sizeByWindows || !occupied || root.style === "numbers") return 1
+    if (!root.sizeByWindows || !occupied || root.style === "omarchy") return 1
     return 1 + Math.min(windows, 5) * 0.09
   }
 
@@ -386,8 +386,8 @@ BarWidget {
       opacity: covered || cleared ? 0 : (occupied || focused || urgent ? 1 : root.dim)
       horizontalMargin: 0
       verticalPadding: 6
-      // Numbers say which workspace they are; markers do not.
-      tooltipText: root.style === "numbers" ? "" : "Workspace " + modelData
+      // Omarchy's numbers say which workspace they are; markers do not.
+      tooltipText: root.style === "omarchy" ? "" : "Workspace " + modelData
 
       // Eating the marker on a workspace that was calling for attention is
       // the power pellet.

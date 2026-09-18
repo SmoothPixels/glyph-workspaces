@@ -24,7 +24,7 @@ _(leave blank)_
 **Maintainer notes**
 ```
 Replaces omarchy.workspaces with four styles: Pac-Man (he walks to the
-workspace you switch to and eats the pellets on the way), Dots, Numbers,
+workspace you switch to and eats the pellets on the way), Dots, Omarchy,
 and Custom glyphs. Clicking a workspace switches to it via the same
 hyprctl dispatch the built-in widget uses. No install hooks, no network
 access, no sudo, no runtime dependencies beyond Omarchy itself.

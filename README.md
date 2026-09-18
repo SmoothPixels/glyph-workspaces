@@ -16,7 +16,7 @@ you switch to:
 - **Space Invaders** turns occupied workspaces into invaders and slides a
   cannon between them, shooting what it passes.
 
-The other three are still: **Dots**, **Numbers** (what the built-in widget
+The other three are still: **Dots**, **Omarchy** (what the built-in widget
 does) and **Custom glyphs** (your own characters). Clicking a workspace
 switches to it, the same as the built-in.
 
@@ -63,7 +63,7 @@ and you never need `--json`.
 
 | Key | Effect |
 | --- | --- |
-| `style` | `pacman`, `dots`, `numbers`, or `glyph`. |
+| `style` | `pacman`, `dots`, `omarchy`, or `glyph`. |
 | `count` | How many workspaces to always show. Live ones above this still appear, up to 10. Default `5`. |
 | `sizeByWindows` | Markers grow with the number of windows on their workspace. Default `true`. |
 | `indicator` | Mark on the focused slot: `auto`, `underline`, `pill`, `none`. `auto` underlines every style except Pac-Man, who marks it himself. |
@@ -124,7 +124,7 @@ want the colour instead.
 
 ### Matching the built-in widget exactly
 
-The `numbers` style is the built-in widget in every respect but one. Omarchy
+The `omarchy` style is the built-in widget in every respect but one. Omarchy
 replaces the focused workspace's number with a glyph, so on workspace 1 it
 reads `󱓻 2 3 4 5` and you can no longer see which number you're on.
 This keeps the number and underlines it instead, which survives a theme whose
@@ -133,7 +133,7 @@ accent matches its foreground.
 If you'd rather have the stock look, it's two settings:
 
 ```sh
-omarchy bar set io.github.smoothpixels.glyph-workspaces style numbers
+omarchy bar set io.github.smoothpixels.glyph-workspaces style omarchy
 omarchy bar set io.github.smoothpixels.glyph-workspaces focusedGlyph 󱓻
 omarchy bar set io.github.smoothpixels.glyph-workspaces indicator none
 ```

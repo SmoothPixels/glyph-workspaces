@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "author": "Jean Alvarado",
   "license": "MIT",
-  "description": "Workspace indicators for Omarchy with a travelling character: Pac-Man eating pellets, a snake trailing your recent workspaces, a rocket, or a Space Invaders cannon, plus dots, numbers, and custom glyph styles.",
+  "description": "Workspace indicators for Omarchy with a travelling character: Pac-Man eating pellets, a snake trailing your recent workspaces, a rocket, or a Space Invaders cannon, plus dots, Omarchy-style numbers, and custom glyph styles.",
   "kinds": [
     "bar-widget"
   ],
@@ -74,8 +74,8 @@
             "description": "A filled dot per occupied workspace, a small one per empty workspace"
           },
           {
-            "value": "numbers",
-            "label": "  Numbers",
+            "value": "omarchy",
+            "label": "  Omarchy",
             "description": "Workspace numbers, like the built-in widget"
           },
           {
