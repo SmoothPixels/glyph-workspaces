@@ -6,9 +6,23 @@ way.
 
 ![The four styles](assets/styles.png)
 
-Four styles: **Pac-Man**, **Dots**, **Numbers** (what the built-in widget
-does), and **Custom glyphs** (your own two characters). Clicking a workspace
+Seven styles. Four put a character on the track that travels to the workspace
+you switch to:
+
+- **Pac-Man** eats the pellets he passes, and they come back a moment after he
+  arrives. Optional ghosts chase him.
+- **Snake** drags a tapering body behind its head.
+- **Rocket** flies across with its thrust pointing back the way it came.
+- **Space Invaders** turns occupied workspaces into invaders and slides a
+  cannon between them, shooting what it passes.
+
+The other three are still: **Dots**, **Numbers** (what the built-in widget
+does) and **Custom glyphs** (your own characters). Clicking a workspace
 switches to it, the same as the built-in.
+
+Occupied workspaces are drawn larger than empty ones, in proportion to how
+many windows they hold, so the row says how busy each workspace is before it
+says anything else.
 
 No runtime dependencies beyond Omarchy itself and a Nerd Font (already part of
 a standard Omarchy install): no network access, no install hooks, no sudo.
@@ -51,6 +65,7 @@ and you never need `--json`.
 | --- | --- |
 | `style` | `pacman`, `dots`, `numbers`, or `glyph`. |
 | `count` | How many workspaces to always show. Live ones above this still appear, up to 10. Default `5`. |
+| `sizeByWindows` | Markers grow with the number of windows on their workspace. Default `true`. |
 | `indicator` | Mark on the focused slot: `auto`, `underline`, `pill`, `none`. `auto` underlines every style except Pac-Man, who marks it himself. |
 | `urgent` | What a workspace does when a window on it asks for attention: `flash`, `color`, `none`. See the note below. |
 | `color` | Empty follows the active theme. `accent`, `urgent`, `muted`, or a `#rrggbb` hex value. |
@@ -68,14 +83,16 @@ Custom glyph style only:
 | `activeGlyph` | Marker for a workspace with windows. Default `●`. |
 | `inactiveGlyph` | Marker for an empty workspace. Default `○`. |
 
-Pac-Man style only:
+Character styles:
 
 | Key | Effect |
 | --- | --- |
-| `chomp` | When his mouth animates: `travel`, `always`, `never`. |
-| `speed` | Travel and chomp speed as a percentage, `25` to `400`. Default `100`. |
-| `eat` | Pellets vanish as he passes and come back a moment after he arrives. Default `true`. |
-| `ghost` | A ghost trails him while he travels. Default `false`. |
+| `speed` | Travel speed as a percentage, `25` to `400`. Default `100`. |
+| `eat` | Markers vanish as the character passes and come back a moment after it arrives. Pac-Man and Space Invaders only. Default `true`. |
+| `chomp` | When Pac-Man's mouth animates: `travel`, `always`, `never`. |
+| `ghost` | How many ghosts chase Pac-Man, `0` to `4`. Default `0`. `true` still means one. |
+| `frightenedColor` | Colour of the ghosts during power-pellet mode. Empty draws them hollow. |
+| `trail` | How many body segments the Snake drags, `0` to `6`. Default `3`. |
 
 And everywhere:
 
@@ -93,6 +110,17 @@ Focus is marked by shape as well as colour, because a theme is free to set the
 bar's accent to the same value as its foreground and several do. That's what
 the focus indicator and the distinct focused marker are for; set
 `indicator none` if you'd rather not have it.
+
+### Power-pellet mode
+
+If Pac-Man eats the marker on a workspace that was calling for attention, the
+ghosts go harmless for a few seconds.
+
+The arcade turns them blue. This doesn't, by default: the bar has one themed
+foreground and no guaranteed second colour, so a hard-coded blue clashes with
+half the themes on offer. Hollowing them out says the same thing and still
+follows your theme. Set `frightenedColor` to `#5555ff`, or `accent`, if you
+want the colour instead.
 
 ### Matching the built-in widget exactly
 

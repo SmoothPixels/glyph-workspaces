@@ -26,6 +26,27 @@ function styles() {
       slot: 16
     },
     {
+      id: "snake",
+      label: "Snake",
+      description: "A snake whose head is the focused workspace and whose body trails through the ones you came from",
+      icon: "f150e",
+      slot: 16
+    },
+    {
+      id: "rocket",
+      label: "Rocket",
+      description: "A rocket that flies to the focused workspace, thrust pointing back the way it came",
+      icon: "f135",
+      slot: 16
+    },
+    {
+      id: "invaders",
+      label: "Space Invaders",
+      description: "Occupied workspaces are invaders; a cannon slides to the focused one, shooting what it passes",
+      icon: "f0bc9",
+      slot: 16
+    },
+    {
       id: "dots",
       label: "Dots",
       description: "A filled dot per occupied workspace, a small one per empty workspace",
@@ -56,10 +77,26 @@ var MARKERS = {
   pellet: "•",      // BULLET, an empty workspace
   ring: "○",        // WHITE CIRCLE, the default custom-glyph "empty"
   focus: "◉",       // FISHEYE, the focused workspace
+  invader: "󰯉", // U+F0BC9 md-space-invaders, the Invaders marker
   // U+F14FB, what omarchy.workspaces puts on the focused slot in place of its
   // number. Written as the surrogate pair the built-in widget uses. Set it as
   // `focusedGlyph` to reproduce the stock look exactly; see the README.
   omarchyFocus: "󱓻"
+}
+
+// Styles that put a character on the track. They all share the travel
+// machinery: one continuous slot index drives where the character is drawn
+// and, for the ones that eat, which markers it has already passed.
+function hasTraveller(style) {
+  return style === "pacman" || style === "snake"
+    || style === "rocket" || style === "invaders"
+}
+
+// ...and of those, the ones where passing a marker removes it. Pac-Man eats
+// pellets; the cannon shoots invaders. The snake is trailing its own body
+// through them and the rocket is only flying past, so neither clears a slot.
+function clearsMarkers(style) {
+  return style === "pacman" || style === "invaders"
 }
 
 function findStyle(id) {
@@ -101,7 +138,12 @@ function markerFor(style, state) {
     if (state.focused) return state.activeGlyph
     return state.occupied ? state.activeGlyph : state.inactiveGlyph
   }
-  if (style === "pacman") return state.occupied ? MARKERS.powerPellet : MARKERS.pellet
+  // An invader per occupied workspace, a pellet per empty one, so the row
+  // still reads as "which of these has windows" before it reads as a game.
+  if (style === "invaders") return state.occupied ? MARKERS.invader : MARKERS.pellet
+  if (style === "pacman" || style === "snake" || style === "rocket") {
+    return state.occupied ? MARKERS.powerPellet : MARKERS.pellet
+  }
   if (state.focused) return MARKERS.focus
   return state.occupied ? MARKERS.powerPellet : MARKERS.pellet
 }
@@ -109,6 +151,8 @@ function markerFor(style, state) {
 if (typeof module !== "undefined") {
   module.exports = {
     styles: styles,
+    hasTraveller: hasTraveller,
+    clearsMarkers: clearsMarkers,
     findStyle: findStyle,
     styleSlot: styleSlot,
     glyphChar: glyphChar,

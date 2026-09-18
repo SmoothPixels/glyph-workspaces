@@ -12,12 +12,19 @@ Canvas {
   property color color: "white"
   // -1 looks left, 0 straight ahead, 1 looks right.
   property real look: 0
+  // Power-pellet state. The arcade turns the ghosts blue, which is not
+  // available here: the bar has one themed foreground and no guaranteed
+  // second colour, so a hard-coded blue would clash with half the themes.
+  // Hollowing them out reads the same way - "these are not a threat now" -
+  // and still follows the theme. Set `frightenedColor` if you want the blue.
+  property bool frightened: false
 
   antialiasing: true
   renderStrategy: Canvas.Cooperative
 
   onColorChanged: requestPaint()
   onLookChanged: requestPaint()
+  onFrightenedChanged: requestPaint()
   onWidthChanged: requestPaint()
   onHeightChanged: requestPaint()
 
@@ -35,7 +42,12 @@ Canvas {
     var bumps = 3
     var bumpWidth = w / bumps
 
+    var stroke = Math.max(1, w * 0.10)
     ctx.fillStyle = root.color
+    ctx.strokeStyle = root.color
+    ctx.lineWidth = stroke
+    ctx.lineJoin = "round"
+
     ctx.beginPath()
     ctx.arc(w / 2, domeY, radius, Math.PI, 0, false) // dome, left to right
     ctx.lineTo(w, skirtY)
@@ -44,7 +56,19 @@ Canvas {
     }
     ctx.lineTo(0, domeY)
     ctx.closePath()
-    ctx.fill()
+    if (root.frightened) ctx.stroke()
+    else ctx.fill()
+
+    // A hollow ghost has no fill to punch the eyes out of, so draw them.
+    if (root.frightened) {
+      ctx.beginPath()
+      ctx.arc(w * 0.34, h * 0.42, Math.max(0.6, w * 0.07), 0, 2 * Math.PI, false)
+      ctx.fill()
+      ctx.beginPath()
+      ctx.arc(w * 0.66, h * 0.42, Math.max(0.6, w * 0.07), 0, 2 * Math.PI, false)
+      ctx.fill()
+      return
+    }
 
     var eyeRadius = w * 0.15
     var eyeY = h * 0.40

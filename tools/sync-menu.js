@@ -41,20 +41,30 @@ for (const s of styles()) {
   ]))
 }
 
-// Pac-Man's own toggles, as checkable rows that flip the stored value.
+// The switches, as checkable rows that flip the stored value. `ghost` is a
+// count rather than a boolean, so its row toggles between none and a pair -
+// one ghost reads as a straggler, two read as a chase. Set any other number
+// from the CLI.
 const toggles = [
   { key: "eat", icon: "f0765", label: "Eat pellets", fallback: "true" },
-  { key: "ghost", icon: "f02a0", label: "Ghost", fallback: "false" },
-  { key: "scroll", icon: "f0142", label: "Scroll to switch", fallback: "false" }
+  { key: "sizeByWindows", icon: "f0335", label: "Size by windows", fallback: "true" },
+  { key: "scroll", icon: "f0142", label: "Scroll to switch", fallback: "false" },
+  { key: "ghost", icon: "f02a0", label: "Ghosts", fallback: "0", on: "2", off: "0" }
 ]
 
 for (const t of toggles) {
+  const on = t.on || "true"
+  const off = t.off || "false"
   const current = `$(${CURRENT_SETTING} ${t.key} ${t.fallback})`
+  // A count row is "on" whenever it is not zero or false.
+  const isOn = t.on
+    ? `[[ "${current}" != "0" && "${current}" != "false" ]]`
+    : `[[ "${current}" == "true" ]]`
   lines.push(row(`style.bar.workspaces.${t.key}`, [
     `"icon":${j(glyphChar(t.icon))}`,
     `"label":${j(t.label)}`,
-    `"checked":${j(`[[ "${current}" == "true" ]]`)}`,
-    `"action":${j(`omarchy bar set ${PLUGIN_ID} ${t.key} "$([[ "${current}" == "true" ]] && echo false || echo true)"`)}`
+    `"checked":${j(isOn)}`,
+    `"action":${j(`omarchy bar set ${PLUGIN_ID} ${t.key} "$(${isOn} && echo ${off} || echo ${on})"`)}`
   ]))
 }
 

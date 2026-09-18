@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "author": "Jean Alvarado",
   "license": "MIT",
-  "description": "Workspace indicators with a Pac-Man that travels to the focused workspace eating the pellets on the way, plus dots, numbers, and custom glyph styles.",
+  "description": "Workspace indicators for Omarchy with a travelling character: Pac-Man eating pellets, a snake trailing your recent workspaces, a rocket, or a Space Invaders cannon, plus dots, numbers, and custom glyph styles.",
   "kinds": [
     "bar-widget"
   ],
@@ -14,7 +14,7 @@
   },
   "barWidget": {
     "displayName": "Glyph Workspaces",
-    "description": "A drop-in replacement for the built-in workspace indicators, with a Pac-Man that walks between workspaces.",
+    "description": "A drop-in replacement for the built-in workspace indicators, with characters that travel to the workspace you switch to.",
     "category": "Compositor",
     "allowMultiple": false,
     "defaultSection": "left",
@@ -34,8 +34,11 @@
       "chomp": "travel",
       "speed": 100,
       "eat": true,
-      "ghost": false,
-      "scroll": false
+      "ghost": 0,
+      "scroll": false,
+      "sizeByWindows": true,
+      "trail": 3,
+      "frightenedColor": ""
     },
     "schema": [
       {
@@ -49,6 +52,21 @@
             "value": "pacman",
             "label": "󰮯  Pac-Man",
             "description": "Pac-Man travels to the focused workspace, eating the pellets on the way"
+          },
+          {
+            "value": "snake",
+            "label": "󱔎  Snake",
+            "description": "A snake whose head is the focused workspace and whose body trails through the ones you came from"
+          },
+          {
+            "value": "rocket",
+            "label": "  Rocket",
+            "description": "A rocket that flies to the focused workspace, thrust pointing back the way it came"
+          },
+          {
+            "value": "invaders",
+            "label": "󰯉  Space Invaders",
+            "description": "Occupied workspaces are invaders; a cannon slides to the focused one, shooting what it passes"
           },
           {
             "value": "dots",
@@ -75,6 +93,16 @@
         "defaultValue": 5,
         "min": 1,
         "max": 10,
+        "step": 1
+      },
+      {
+        "key": "trail",
+        "type": "integer",
+        "label": "Trail length",
+        "description": "How many body segments the Snake drags behind it, one per workspace you recently left.",
+        "defaultValue": 3,
+        "min": 0,
+        "max": 6,
         "step": 1
       },
       {
@@ -227,11 +255,28 @@
         "defaultValue": true
       },
       {
-        "key": "ghost",
+        "key": "sizeByWindows",
         "type": "boolean",
-        "label": "Ghost",
-        "description": "A ghost trails behind Pac-Man.",
-        "defaultValue": false
+        "label": "Size by windows",
+        "description": "Markers grow with the number of windows on their workspace, so a busier workspace is a fatter pellet.",
+        "defaultValue": true
+      },
+      {
+        "key": "ghost",
+        "type": "integer",
+        "label": "Ghosts",
+        "description": "How many ghosts chase Pac-Man while he travels. 0 is none. `true` still means one.",
+        "defaultValue": 0,
+        "min": 0,
+        "max": 4,
+        "step": 1
+      },
+      {
+        "key": "frightenedColor",
+        "type": "string",
+        "label": "Frightened colour",
+        "description": "Colour of the ghosts after Pac-Man clears a workspace that was calling for attention. Empty draws them hollow instead, which follows any theme.",
+        "defaultValue": ""
       },
       {
         "key": "scroll",
