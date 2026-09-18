@@ -179,7 +179,7 @@ omarchy plugin enable omarchy.workspaces
 - **Urgent workspaces are rarer than you'd expect on Omarchy.** Omarchy sets
   `misc:focus_on_activate = true`, so a window asking for attention normally
   just pulls you straight to it and the workspace is never left marked urgent.
-  Where this does show up is apps configured the other way — Omarchy ships
+  Where this does show up is apps configured the other way: Omarchy ships
   `focus_on_activate = false` for Telegram, and you can do the same for any app
   in `~/.config/hypr/apps/`. So the setting is worth having, but on a stock
   install it will sit quiet most of the time. It only paints a marker; it does
