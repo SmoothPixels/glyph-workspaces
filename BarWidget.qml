@@ -146,7 +146,7 @@ BarWidget {
   readonly property real trackLength: root.slotCount * root.slotLength
     + Math.max(0, root.slotCount - 1) * root.gap
   readonly property real markerFontSize: root.fontSizeSetting > 0 ? root.fontSizeSetting : Style.font.body
-  readonly property real charSize: Math.round(root.markerFontSize * 1.3)
+  readonly property real charSize: Math.round(root.markerFontSize)
 
   function slotPos(index) { return index * (root.slotLength + root.gap) }
   function slotCenter(index) { return index * (root.slotLength + root.gap) + root.slotLength / 2 }
