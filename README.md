@@ -148,6 +148,8 @@ menu, this ships a ready-made "Style → Menu Bar → Workspace Style" submenu: 
 checkable row per style, plus toggles for the pellets, the ghost, and scroll to
 switch.
 
+![Style > Menu Bar > Workspace Style submenu, with Pac-Man checked](assets/menu-picker.png)
+
 It's opt-in: nothing in this plugin writes to your menu config on its own,
 since a plugin silently editing your files on install is exactly what the
 marketplace review checklist asks authors *not* to do. Install it yourself:
