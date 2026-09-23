@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "io.github.smoothpixels.glyph-workspaces",
   "name": "Glyph Workspaces",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Jean Alvarado",
   "license": "MIT",
   "description": "Workspace indicators for Omarchy with a travelling character: Pac-Man eating pellets, a snake trailing your recent workspaces, a rocket, or a Space Invaders cannon, plus dots, Omarchy-style numbers, and custom glyph styles.",
